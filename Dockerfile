@@ -8,18 +8,20 @@ yum install -y freeswitch-config-vanilla freeswitch-lang-en freeswitch-sounds-en
 RUN yum install -y net-tools sngrep && \
 yum clean all
 
-# Copy config files (recursively append folder without removing FS files from /etc/Freeswitch)
+# Copy config files (recursively append folder without removing FS files from /etc/freeswitch)
 COPY config/. /etc/freeswitch/
+
+COPY share/. /usr/share/freeswitch/
 
 # Remove IPV6 because we won't use it
 RUN rm -r /etc/freeswitch/sip_profiles/*ipv6*
 
-# Give RWX to all for development purposes (see # Volumes)
+# Change owner to FS
+RUN chown -R freeswitch:daemon /etc/freeswitch
+RUN chown -R freeswitch:daemon /usr/share/freeswitch/
+
+# Give RWX to all, for development purposes (see #Mounts in install.sh and README)
 RUN chmod -R a+rwx /etc/freeswitch
 RUN chmod -R a+rwx /usr/share/freeswitch
-
-# Volumes
-VOLUME /etc/freeswitch
-VOLUME /usr/share/freeswitch
 
 CMD freeswitch && tail -f /var/log/freeswitch.log

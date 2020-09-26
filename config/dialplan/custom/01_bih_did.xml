@@ -1,8 +1,0 @@
-<include>
-    <extension name="bih_did">
-        <condition field="destination_number" expression="^(387).*">
-            <action application="set" data="domain_name=$${domain}"/>
-            <action application="transfer" data="9173$ XML custom"/>
-        </condition>
-    </extension>
-</include>
