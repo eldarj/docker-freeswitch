@@ -1,0 +1,9 @@
+<include>
+    <extension name="Play Custom Sound" >
+        <condition field="destination_number" expression="^9173$">
+            <action application="answer"/>
+            <action application="playback" data="/usr/share/freeswitch/sounds/example.wav"/>
+            <action application="hangup"/>
+        </condition>
+    </extension>
+</include>
